@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "base.html" %}
+{% load static %}
 
-    </head>
-    <body>
-        {% include "_navbar.html" %}
-        <h1>ここはHOMEです。</h1>
-    </body>
+{% block main %}
 
-</html>
+{% if username %}
+<h1>{{ username }}さんようこそ！</h1>
+{% else %}
+<h1>ゲストさんようこそ！</h1>
+{% endif %}
+
+<img src="{% static 'welcome.jpg' %}"/>
+
+{% endblock %}

@@ -1,11 +1,28 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "base.html" %}
+{% load humanize%}
 
-    </head>
-    <body>
-        {% include "_navbar.html" %}
-        <h1>ここは2つめのウィンドウになる予定ですぜ兄貴。</h1>
-    </body>
+{% block main %}
 
-</html>
+<h1>私について</h1>
+
+<h2>スキル</h2>
+<p>{% now "Y-m-d" %}現在、取得スキル{{ num_skills|intcomma }}個</p> 
+<ul>
+    {% for skill in skills %}
+    <li>{{ skill }}</li>
+    {% empty %}
+    表示できるものが現在何もありません(*_ _)՞՞
+    {% endfor %}
+</ul>
+
+
+{% now "Y-m-d" %}現在、練習中スキル{{ num_practice_skills|intcomma }}個</p>   
+<ul>
+    {% for practice_skill in practice_skills %}
+    <li>{{ practice_skill }}</li>
+    {% empty %}
+    表示できるものが現在何もありません(*_ _)՞՞
+    {% endfor %}
+</ul> 
+
+{% endblock %}
