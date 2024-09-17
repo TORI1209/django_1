@@ -11,8 +11,8 @@ class IndexView(TemplateView):
         ctxt["username"] = ""   
         return ctxt
 
-class HelpView(TemplateView):
-    template_name = "help_index.html"
+class ProfileView(TemplateView):
+    template_name = "profile_index.html"
 
     def get_context_data(self):
         ctxt = super().get_context_data()

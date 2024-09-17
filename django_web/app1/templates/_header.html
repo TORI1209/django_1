@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>CSS入門-ヘッダーとフッターの固定表示</title>
+
+    <link rel="stylesheet" href="{% static 'header.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+
+<body>    
+    {% include "_navbar.html" %}
+
+    <div class="Contents">
+        {% block main %}
+        表示できるコンテンツがありません
+        {% endblock %}
+    </div>
+    {% include "_footer.html" %}
+</body>
+</html>

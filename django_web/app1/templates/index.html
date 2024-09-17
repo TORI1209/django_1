@@ -4,10 +4,14 @@
 {% block main %}
 
 {% if username %}
+<div class=user>
+
 <h1>{{ username }}さんようこそ！</h1>
 {% else %}
 <h1>ゲストさんようこそ！</h1>
 {% endif %}
+
+</div>
 
 <img src="{% static 'welcome.jpg' %}"/>
 
