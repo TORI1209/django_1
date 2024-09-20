@@ -3,16 +3,34 @@
 
 {% block main %}
 
-{% if username %}
-<div class=user>
+<body>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</body>
 
-<h1>{{ username }}さんようこそ！</h1>
-{% else %}
-<h1>ゲストさんようこそ！</h1>
-{% endif %}
+<h1>TORI TECH (仮)</h1>
+
+{% if username %}
+<div class="user">
+
+    <h2>{{ username }}さんようこそ！</h2>
+    {% else %}
+    <h2>ゲストさんようこそ！</h2>
+    {% endif %}
+
+<h3>information</h3>
+
+<div class="information">
+
+    <h4>{{date}}</h4>
+
+    <h5>{{title}}</h5>
+
+    <h5>{{context}}</h5>
+
+
+
+
 
 </div>
-
-<img src="{% static 'welcome.jpg' %}"/>
 
 {% endblock %}
