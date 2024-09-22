@@ -1,9 +1,8 @@
 .logo { 
     margin-right: 100px;
     margin-left: 0px;
-    display: flex; /* 横並びにするための設定 */
-    align-items: center;
-    justify-content: center;
+    display: flex; 
+    align-items: center;  
 }
 
 .logo img {
@@ -14,7 +13,6 @@
 
 .logo p {
     color: white;
-    /*font-weight: bold;*/
     font-size: 30px;
     text-decoration: none;
     margin-left: 10px; /* 画像と文字の間にスペースを追加 */
@@ -37,9 +35,7 @@
 .web_link {
     margin-right: 100px;
     margin-left: 0px;
-    display: flex; /* 横並びにするための設定 */
-    align-items: center;
-    justify-content: center;
+    display: flex; 
 }
 
 .web_link a{
@@ -60,9 +56,7 @@
 .ins_logo { 
     margin-right: 0px;
     margin-left: 200px;
-    display: flex; /* 横並びにするための設定 */
-    align-items: center;
-    justify-content: center;
+    display: flex; 
 }
 
 .ins_logo img {
@@ -82,9 +76,7 @@
 .x_logo { 
     margin-right: 0px;
     margin-left: 20px;
-    display: flex; /* 横並びにするための設定 */
-    align-items: center;
-    justify-content: center;
+    display: flex; 
 }
 
 .x_logo img {
@@ -104,9 +96,7 @@
 .mail_logo { 
     margin-right: 0px;
     margin-left: 20px;
-    display: flex; /* 横並びにするための設定 */
-    align-items: center;
-    justify-content: center;
+    display: flex;
 }
 
 .mail_logo img {
@@ -146,4 +136,3 @@
     width: 100%;
     overflow: auto;
 }
-

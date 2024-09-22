@@ -1,4 +1,4 @@
-.Contents h1{
+#main-title{
     margin: 0 auto;  
     margin-top: 250px;
     margin-bottom: 1000px;
@@ -7,7 +7,7 @@
     width: 100%; /* 必要に応じて幅を指定 */
 }
 
-.Contents h2 {
+#main-user {
     margin: 0 auto;
     margin-bottom: 400px;
     color: black;
@@ -15,24 +15,34 @@
     
 }
 
-.Contents h3{
+#main-information-title{
     margin: 0 auto;  
     color: black;
     text-align: center; /* 中央寄せ */
     width: 100%; /* 必要に応じて幅を指定 */
+    margin-bottom: 20px;
 }
 
-
-
-.Contents h4{
+#main-information {
     margin: 0 auto;
     text-align: center;
     font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
-
-.Contents h5{
-    margin: 0 auto;
-    text-align: center;
+#main-information .date {
     font-size: 20px;
+    margin-right: 30;
+    color: black;
+}
+#main-informatin .title {
+    font-size: 25px;
 }
 
+#line {
+    border-bottom: 2px solid black;/* 線の太さと色 */
+    width: 1000px;
+    margin: 10px 10px; /* 線の上下の余白 */
+    margin: 0 auto;  
+    text-align: center; /* 中央寄せ */
+}

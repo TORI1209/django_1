@@ -1,6 +1,9 @@
 from typing import Any
 from django.views.generic import TemplateView
 
+#相対パス用
+import os 
+
 #　json の import
 from django.shortcuts import render
 import json
@@ -19,11 +22,19 @@ class IndexView(TemplateView):
     
     def get_context_data(self):
         ctxt = super().get_context_data()
-        with open("C:/Users/EDO-NET User/Desktop/django_1/django_web/app1/information.json","r") as json_read:
+
+        current_dir = os.path.dirname(__file__)
+        json_path = os.path.join(current_dir, "information.json")
+
+        with open(json_path, "r") as json_read:
             json_data = json.load(json_read)
-            ctxt["date"] = json_data["information"][0]["date"] 
-            ctxt["title"] = json_data["information"][0]["title"] 
-            ctxt["context"] = json_data["information"][0]["context"] 
+
+            # json の情報を context に格納
+            ctxt["information_list"] = json_data["information"]
+            ctxt["info_count"] = len(json_data["information"])
+            # ctxt["date"] = json_data["information"][0]["date"] 
+            # ctxt["title"] = json_data["information"][0]["title"] 
+            # ctxt["context"] = json_data["information"][0]["context"] 
 
             return ctxt
             

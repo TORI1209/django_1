@@ -7,30 +7,41 @@
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </body>
 
-<h1>TORI TECH (仮)</h1>
+<h1 id="main-title">TORI TECH (仮)</h1>
 
 {% if username %}
-<div class="user">
 
-    <h2>{{ username }}さんようこそ！</h2>
+
+    <h1 id="main-user">{{ username }}さんようこそ！</h1>
     {% else %}
-    <h2>ゲストさんようこそ！</h2>
+    <h1 id="main-user">ゲストさんようこそ！</h1>
     {% endif %}
 
-<h3>information</h3>
+<h1 id="main-information-title">information</h1>
 
-<div class="information">
-
-    <h4>{{date}}</h4>
-
-    <h5>{{title}}</h5>
-
-    <h5>{{context}}</h5>
+<h1 id="line"></h1> <!-- 線 -->
 
 
+{% if information_list %}
+    {% for info in information_list %}
 
+        <h1 id="main-information">
 
+            <a class="date">{{ info.date }}</a>
+            <a class="title">{{ info.title }}</a>
 
-</div>
+        </h1>
+
+        <h1 id="line"></h1> <!-- 線 -->
+
+    {% endfor %}
+{% else %}
+
+    <p>お知らせはありません。</p>
+
+{% endif %}
 
 {% endblock %}
+
+
+
