@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 #相対パス用
 import os 
 
-#　json の import
+#json の import
 from django.shortcuts import render
 import json
 from django.http.response import JsonResponse
@@ -36,6 +36,8 @@ class IndexView(TemplateView):
             # ctxt["title"] = json_data["information"][0]["title"] 
             # ctxt["context"] = json_data["information"][0]["context"] 
 
+            id = 1
+
             return ctxt
             
     
@@ -59,4 +61,8 @@ class ProfileView(TemplateView):
         ctxt["practice_skills"] = practice_skills
 
         return ctxt
+
+class InformationView(TemplateView):
+    template_name = "information.html"
+
     
