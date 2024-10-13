@@ -4,6 +4,9 @@ from django.views.generic import TemplateView
 #相対パス用
 import os 
 
+# データベースのimport
+import sqlite3
+
 #json の import
 from django.shortcuts import render
 import json
@@ -61,6 +64,18 @@ class ProfileView(TemplateView):
         ctxt["practice_skills"] = practice_skills
 
         return ctxt
+
+class TableMakeView(TemplateView):
+    template_name = "table_make.html"
+
+    # current_dir = os.path.dirname(__file__)
+    # db_path = os.path.join(current_dir, 'database.db')
+    # conn = sqlite3.connect(db_path)
+    # cur = conn.cursor()
+
+
+
+
 
 class InformationView(TemplateView):
     template_name = "information.html"
