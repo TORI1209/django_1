@@ -6,8 +6,7 @@ import os
 
 # データベースのimport
 import sqlite3
-
-from django.http import HttpResponse
+# from django.http import HttpResponse
 
 #json の import
 from django.shortcuts import render
@@ -95,17 +94,13 @@ def process_form(request):
         cur.execute('INSERT INTO information (date, title, context) VALUES (?, ?, ?)',
                     (database_date, database_title, data_context))
 
+
+
+        
+
         # 変更をコミットし、接続を閉じる
         conn.commit()
         conn.close()
 
-        # 取得したデータを使って処理を行う（例として、簡単な表示）
-        return HttpResponse(f"Date: {database_date}, Title: {database_title}, Context: {data_context} was saved to the database.")
-    
-    # GETリクエストの場合、フォームページを表示
-    return render(request, 'input_form.html')
-
-class InformationView(TemplateView):
-    template_name = "information.html"
 
     
