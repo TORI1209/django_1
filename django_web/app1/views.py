@@ -7,11 +7,16 @@ import os
 # データベースのimport
 import sqlite3
 
+from django.http import HttpResponse
+
 #json の import
 from django.shortcuts import render
 import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+
+from django.shortcuts import render
+from django.http import HttpResponse
 
 
 class IndexView(TemplateView):
@@ -73,9 +78,32 @@ class TableMakeView(TemplateView):
     # conn = sqlite3.connect(db_path)
     # cur = conn.cursor()
 
+def process_form(request):
+    if request.method == 'POST':
+        # フォームから送信されたデータをそれぞれ変数に代入
+        database_date = request.POST.get('database_date')
+        database_title = request.POST.get('database_title')
+        data_context = request.POST.get('data_context')
 
+        # データベースに保存
+        current_dir = os.path.dirname(__file__)
+        db_path = os.path.join(current_dir, 'database.db')  # データベースファイルのパスを指定
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
 
+        # SQLインジェクション対策として、プレースホルダーを使用
+        cur.execute('INSERT INTO information (date, title, context) VALUES (?, ?, ?)',
+                    (database_date, database_title, data_context))
 
+        # 変更をコミットし、接続を閉じる
+        conn.commit()
+        conn.close()
+
+        # 取得したデータを使って処理を行う（例として、簡単な表示）
+        return HttpResponse(f"Date: {database_date}, Title: {database_title}, Context: {data_context} was saved to the database.")
+    
+    # GETリクエストの場合、フォームページを表示
+    return render(request, 'input_form.html')
 
 class InformationView(TemplateView):
     template_name = "information.html"
