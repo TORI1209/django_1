@@ -14,9 +14,10 @@ import json
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
+from django.http import HttpResponseRedirect
+
 from django.shortcuts import render
 from django.http import HttpResponse
-
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -69,38 +70,129 @@ class ProfileView(TemplateView):
 
         return ctxt
 
+
+
 class TableMakeView(TemplateView):
     template_name = "table_make.html"
 
-    # current_dir = os.path.dirname(__file__)
-    # db_path = os.path.join(current_dir, 'database.db')
-    # conn = sqlite3.connect(db_path)
-    # cur = conn.cursor()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # データベースパスの設定
+        current_dir = os.path.dirname(__file__)
+        db_path = os.path.join(current_dir, 'database.db')
+
+        # データベースに接続して情報を取得
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute('SELECT * FROM information WHERE id = 1')
+            row = cur.fetchone()
+
+        # テンプレートに渡すコンテキストを設定
+        context["response_tables"] = row
+
+        return context
+
 
 def process_form(request):
     if request.method == 'POST':
-        # フォームから送信されたデータをそれぞれ変数に代入
+        # フォームからデータを取得
         database_date = request.POST.get('database_date')
         database_title = request.POST.get('database_title')
         data_context = request.POST.get('data_context')
 
-        # データベースに保存
+        # データベースにデータを保存
         current_dir = os.path.dirname(__file__)
-        db_path = os.path.join(current_dir, 'database.db')  # データベースファイルのパスを指定
-        conn = sqlite3.connect(db_path)
+        db_path = os.path.join(current_dir, 'database.db')
+
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute(
+                'INSERT INTO information (date, title, context) VALUES (?, ?, ?)',
+                (database_date, database_title, data_context)
+            )
+            conn.commit()
+
+        # データが保存されたらリダイレクト
+        return HttpResponseRedirect('/success')  # 成功ページにリダイレクト
+
+    return render(request, 'form_page.html')  # フォームページを表示
+
+# def get_context_data(self):
+
+#     # 現在位置の取得
+#     current_dir = os.path.dirname(__file__)
+#     db_path = os.path.join(current_dir, 'database.db')
+
+#     # データベース接続
+#     conn = sqlite3.connect(db_path)
+#     cur = conn.cursor()
+
+#     # idの最大値を取得 max_idに収納 int
+#     cur.execute('SELECT MAX(id) FROM information')
+#     max_id = cur.fetchone()[0]
+
+#     #変数に変数を入れるために必須
+#     varia = {}
+
+#     if max_id:  
+#         for i in range(1,max_id + 1):
+#             # データの取得（informationテーブルにid = 1のレコードがあるかを確認）
+#             cur.execute('SELECT * FROM information WHERE id = ?',(i,))
+
+#             # 結果を取得して表示
+#             row = cur.fetchone()  
+
+#             if row:
+#                 # 日付、タイトル、内容をそれぞれ
+#                 varia[f"{i}data_date"] = row[1]
+#                 varia[f"{i}data_title"] = row[2]      
+#                 varia[f"{i}data_context"] = row[3]
+   
+#     context = {"varia": varia}
+#     conn.close()
+
+#     return context
+
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+
+    # データベース接続と情報取得
+    current_dir = os.path.dirname(__file__)
+    db_path = os.path.join(current_dir, 'database.db')
+    with sqlite3.connect(db_path) as conn:
         cur = conn.cursor()
+        cur.execute('SELECT * FROM information WHERE id = 1')
+        row = cur.fetchone()
+        if row:
+            context["response_tables"] = {
+                "id": row[0],
+                "date": row[1],
+                "title": row[2],
+                "context": row[3],
+            }
+        else:
+            context["response_tables"] = None
 
-        # SQLインジェクション対策として、プレースホルダーを使用
-        cur.execute('INSERT INTO information (date, title, context) VALUES (?, ?, ?)',
-                    (database_date, database_title, data_context))
+    return context
+
+
+# 確認用のもの
+def some_view(request):
+    # 現在位置の取得
+    current_dir = os.path.dirname(__file__)
+    db_path = os.path.join(current_dir, 'database.db')
+
+    # データベース接続
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute('SELECT * FROM information WHERE id = ?', (1,))
+    test = cur.fetchone()
+
+    context = {"test1": test}
+    return render(request, 'template_name.html', context)
 
 
 
-        
 
-        # 変更をコミットし、接続を閉じる
-        conn.commit()
-        conn.close()
-
-
-    

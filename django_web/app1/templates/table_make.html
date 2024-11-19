@@ -1,4 +1,6 @@
-<!-- templates/input_form.html -->
+{% load static %}
+
+
 <form method="POST" action="{% url 'process_form' %}">
     {% csrf_token %}
     
@@ -12,4 +14,14 @@
     <input type="text" id="data_context" name="data_context" required minlength="1" maxlength="128" size="10">
 
     <button type="submit">Submit</button>
+
+    <p>{{ test1 }}</p>
+    <p>DEBUG: {{ test1 }}</p>
+
+    <p>{{varia|length}}</p>
+
+    {% for key, value in varia.items %}
+        <p>{{ key }}: {{ value }}</p>
+    {% endfor %}
+
 </form>
