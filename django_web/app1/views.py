@@ -75,6 +75,8 @@ class ProfileView(TemplateView):
 class TableMakeView(TemplateView):
     template_name = "table_make.html"
 
+    print("テーブル名くらい2")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -93,6 +95,71 @@ class TableMakeView(TemplateView):
 
         return context
 
+
+    
+
+    def get_context_data(self):
+
+        # 現在位置の取得
+        current_dir = os.path.dirname(__file__)
+        db_path = os.path.join(current_dir, 'database.db')
+
+        # データベース接続
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+
+        # idの最大値を取得 max_idに収納 int
+        cur.execute('SELECT MAX(id) FROM information')
+        max_id = cur.fetchone()[0]
+
+        #変数に変数を入れるために必須
+        varia = {}
+
+        if max_id:  
+            for i in range(1,max_id + 1):
+                # データの取得（informationテーブルにid = 1のレコードがあるかを確認）
+                cur.execute('SELECT * FROM information WHERE id = ?',(i,))
+
+                # 結果を取得して表示
+                row = cur.fetchone()  
+
+                if row:
+                    # 日付、タイトル、内容をそれぞれ
+                    varia[f"{i}data_date"] = row[1]
+                    varia[f"{i}data_title"] = row[2]      
+                    varia[f"{i}data_context"] = row[3]
+    
+        context = varia
+        conn.close()
+
+        print("おちんぽぽ",context)
+
+        return context
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+
+    #     # データベース接続と情報取得
+    #     current_dir = os.path.dirname(__file__)
+    #     db_path = os.path.join(current_dir, 'database.db')
+    #     with sqlite3.connect(db_path) as conn:
+    #         cur = conn.cursor()
+    #         cur.execute('SELECT * FROM information WHERE id = 1')
+    #         row = cur.fetchone()
+    #         if row:
+    #             context["response_tables"] = {
+    #                 "id": row[0],
+    #                 "date": row[1],
+    #                 "title": row[2],
+    #                 "context": row[3],
+    #             }
+    #         else:
+    #             context["response_tables"] = None
+
+    #     print(context)
+
+    #     return context
+        
 
 def process_form(request):
     if request.method == 'POST':
@@ -117,81 +184,6 @@ def process_form(request):
         return HttpResponseRedirect('/success')  # 成功ページにリダイレクト
 
     return render(request, 'form_page.html')  # フォームページを表示
-
-# def get_context_data(self):
-
-#     # 現在位置の取得
-#     current_dir = os.path.dirname(__file__)
-#     db_path = os.path.join(current_dir, 'database.db')
-
-#     # データベース接続
-#     conn = sqlite3.connect(db_path)
-#     cur = conn.cursor()
-
-#     # idの最大値を取得 max_idに収納 int
-#     cur.execute('SELECT MAX(id) FROM information')
-#     max_id = cur.fetchone()[0]
-
-#     #変数に変数を入れるために必須
-#     varia = {}
-
-#     if max_id:  
-#         for i in range(1,max_id + 1):
-#             # データの取得（informationテーブルにid = 1のレコードがあるかを確認）
-#             cur.execute('SELECT * FROM information WHERE id = ?',(i,))
-
-#             # 結果を取得して表示
-#             row = cur.fetchone()  
-
-#             if row:
-#                 # 日付、タイトル、内容をそれぞれ
-#                 varia[f"{i}data_date"] = row[1]
-#                 varia[f"{i}data_title"] = row[2]      
-#                 varia[f"{i}data_context"] = row[3]
-   
-#     context = {"varia": varia}
-#     conn.close()
-
-#     return context
-
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-
-    # データベース接続と情報取得
-    current_dir = os.path.dirname(__file__)
-    db_path = os.path.join(current_dir, 'database.db')
-    with sqlite3.connect(db_path) as conn:
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM information WHERE id = 1')
-        row = cur.fetchone()
-        if row:
-            context["response_tables"] = {
-                "id": row[0],
-                "date": row[1],
-                "title": row[2],
-                "context": row[3],
-            }
-        else:
-            context["response_tables"] = None
-
-    return context
-
-
-# 確認用のもの
-def some_view(request):
-    # 現在位置の取得
-    current_dir = os.path.dirname(__file__)
-    db_path = os.path.join(current_dir, 'database.db')
-
-    # データベース接続
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-
-    cur.execute('SELECT * FROM information WHERE id = ?', (1,))
-    test = cur.fetchone()
-
-    context = {"test1": test}
-    return render(request, 'template_name.html', context)
 
 
 

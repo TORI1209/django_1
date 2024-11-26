@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import IndexView, ProfileView, TableMakeView, process_form  # process_formを追加
+from .views import IndexView, ProfileView, TableMakeView ,process_form  
+#process_formを追加
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),  # ビューに名前を付けるのが推奨

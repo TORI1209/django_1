@@ -15,13 +15,11 @@
 
     <button type="submit">Submit</button>
 
-    <p>{{ test1 }}</p>
-    <p>DEBUG: {{ test1 }}</p>
 
-    <p>{{varia|length}}</p>
+    <p>{{context|length}}</p>
 
     {% for key, value in varia.items %}
-        <p>{{ key }}: {{ value }}</p>
+    <p>{{ key }}: {{ value }}</p>
     {% endfor %}
 
 </form>
