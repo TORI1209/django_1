@@ -136,30 +136,7 @@ class TableMakeView(TemplateView):
 
         return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
 
-    #     # データベース接続と情報取得
-    #     current_dir = os.path.dirname(__file__)
-    #     db_path = os.path.join(current_dir, 'database.db')
-    #     with sqlite3.connect(db_path) as conn:
-    #         cur = conn.cursor()
-    #         cur.execute('SELECT * FROM information WHERE id = 1')
-    #         row = cur.fetchone()
-    #         if row:
-    #             context["response_tables"] = {
-    #                 "id": row[0],
-    #                 "date": row[1],
-    #                 "title": row[2],
-    #                 "context": row[3],
-    #             }
-    #         else:
-    #             context["response_tables"] = None
-
-    #     print(context)
-
-    #     return context
-        
 
 def process_form(request):
     if request.method == 'POST':
@@ -187,4 +164,11 @@ def process_form(request):
 
 
 
+class SuccessView(TemplateView):  
+    template_name = "table_make_success.html"
 
+class Tablemake_cushion_View(TemplateView):
+    template_name = "table_make_cushion.html"
+
+class TableReMakeView(TemplateView):
+    template_name = "table_remake.html"

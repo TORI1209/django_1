@@ -1,13 +1,16 @@
 from django.urls import path
-from .views import IndexView, ProfileView, TableMakeView ,process_form  
-#process_formを追加
+from .views import IndexView, ProfileView, TableMakeView, TableReMakeView, process_form, SuccessView, Tablemake_cushion_View 
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),  # ビューに名前を付けるのが推奨
+    path('', IndexView.as_view(), name='index'),
     path('profile/', ProfileView.as_view(), name='profile'),
-    path('table_make/', TableMakeView.as_view(), name='table_make'),
-    path('process_form/', process_form, name='process_form'),  # 関数ベースビューのパス
+    path('tablemake_cushion/', Tablemake_cushion_View.as_view(), name='tablemake_cushion'),
+    path('tablemake_cushion/table_make/', TableMakeView.as_view(), name='table_make'),
+    path('tablemake_cushion/table_remake/', TableReMakeView.as_view(), name='table_remake'),
+    path('process_form/', process_form, name='process_form'),
+    path('success/', SuccessView.as_view(), name='success'),  
 ]
+
     # path('news/<str:info.title>/', InformationView.as_view()),
 
 
