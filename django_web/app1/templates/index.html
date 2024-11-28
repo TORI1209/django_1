@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block main %}
-
 <body>
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </body>
@@ -10,42 +9,27 @@
 <h1 id="main-title">TORI(仮)</h1>
 
 {% if username %}
-
-
     <h1 id="main-user">{{ username }}さんようこそ！</h1>
-    {% else %}
+{% else %}
     <h1 id="main-user">ゲストさんようこそ！</h1>
-    {% endif %}
+{% endif %}
 
 <h1 id="main-information-title">information</h1>
 
 <h1 id="line"></h1> <!-- 線 -->
 
-
 {% if information_list %}
     {% for info in information_list %}
-
         <h1 id="main-information">
-
             <a class="date">{{ info.date }}</a>
-            <!-- <a class="title">{{ info.title }}</a> -->            
-            <a class="title" href="/{{ info.title }}">{{ info.title }}</a>
-
+            <a class="title" href="{% url 'news' title=info.title|urlencode %}">{{ info.title }}</a>
         </h1>
-
-        <h1 id="line"></h1> <!-- 線 -->
-
+        <h1 id="line"></h1>
     {% endfor %}
 {% else %}
-
     <p>お知らせはありません。</p>
-
 {% endif %}
 
-<h1 id="make"><a href="tablemake_cushion/">informationを作成する</a></h1>
-
+<h1 id="make"><a href="{% url 'tablemake_cushion' %}">informationを作成する</a></h1>
 
 {% endblock %}
-
-
-
